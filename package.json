@@ -1,0 +1,28 @@
+{
+  "name": "carsimj-local-server",
+  "version": "1.0.0",
+  "description": "Helyi hoszt-szerver a carsimj multiplayerhez. Nincs benne semmilyen külső internetes szolgáltatás.",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js",
+    "build-win": "pkg . --targets node18-win-x64 --output dist/carsimj-server-win.exe",
+    "build-mac": "pkg . --targets node18-macos-x64 --output dist/carsimj-server-mac",
+    "build-linux": "pkg . --targets node18-linux-x64 --output dist/carsimj-server-linux",
+    "build-all": "pkg . --targets node18-win-x64,node18-macos-x64,node18-linux-x64 --output dist/carsimj-server"
+  },
+  "bin": "server.js",
+  "pkg": {
+    "assets": [],
+    "targets": ["node18-win-x64", "node18-macos-x64", "node18-linux-x64"]
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "ws": "^8.16.0",
+    "nat-upnp": "^1.1.1"
+  },
+  "devDependencies": {
+    "pkg": "^5.8.1"
+  }
+}

@@ -1,0 +1,39 @@
+name: Build carsimj server exe
+
+# Ez a workflow a GitHub saját gépein futtatja a buildet (ott nincs hálózati korlátozás),
+# így neked semmit nem kell a saját gépeden telepítened.
+#
+# Lefut automatikusan, amikor változás kerül a main ágra ebben a mappában,
+# VAGY bármikor kézzel is elindíthatod a repo "Actions" fülén (Run workflow gomb).
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'mp-exe-server/**'
+  workflow_dispatch: {}
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: mp-exe-server
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build Windows / macOS / Linux binaries
+        run: npm run build-all
+
+      - name: Upload built binaries
+        uses: actions/upload-artifact@v4
+        with:
+          name: carsimj-server-binaries
+          path: mp-exe-server/dist/*
